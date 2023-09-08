@@ -1,11 +1,11 @@
 <template>
-    <Navbar/>
-    <br>
+  <Navbar />
+  <br />
   <div class="container">
     <div class="card">
       <div class="card-body">
-        <h2 class="card-title">Registrar Usuario</h2>
-        <form @submit.prevent="signupComponent.signup">
+        <h2 class="card-title">Editar usuario</h2>
+        <form @submit.prevent="updateUserComponent.updateUser">
           <div class="form-group">
             <label for="usuario">Nombres:</label>
             <input
@@ -13,7 +13,7 @@
               class="form-control"
               id="nombres"
               placeholder="Ingrese sus nombres y apellidos"
-              v-model="user.name"
+              v-model="updateUser.name"
             />
           </div>
           <div class="form-group">
@@ -24,7 +24,7 @@
               id="email"
               placeholder="Ingrese email"
               required
-              v-model="user.email"
+              v-model="updateUser.email"
             />
           </div>
           <div class="form-group">
@@ -35,7 +35,7 @@
               id="password"
               placeholder="Ingrese su contraseña"
               required
-              v-model="user.password"
+              v-model="updateUser.password"
             />
           </div>
           <div>
@@ -43,7 +43,7 @@
             <select
               class="form-select"
               aria-label="Default select example"
-              v-model="user.gender"
+              v-model="updateUser.gender"
             >
               <option value="M">Masculino</option>
               <option value="F">Femenino</option>
@@ -56,45 +56,58 @@
               class="form-control"
               id="direccion"
               placeholder="Ingrese su dirección"
-              v-model="user.address"
+              v-model="updateUser.address"
             />
           </div>
           <br />
-          <button type="submit" class="btn btn-primary">
-            Registrar Usuario
-          </button>
+          <button type="submit" class="btn btn-primary">Editar Usuario</button>
         </form>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import Navbar from '../../components/Navbar.vue'
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, onBeforeMount } from "vue";
+import { useRoute } from "vue-router";
+import router from "../../router/index";
 import { useSignupStore } from "../store/signup.store";
 import Swal from "sweetalert2";
-import { ISignup } from "../interfaces/signup.interface";
+import { IUpdateUser } from "../interfaces/signup.interface";
+import Navbar from "../../components/Navbar.vue";
+const route = useRoute();
 const signupStore = useSignupStore();
-
-const user = ref<ISignup>({
-  name: "",
-  email: "",
-  password: "",
-  gender: "",
-  address: "",
+const updateUser = ref<IUpdateUser>({
+  name: undefined,
+  email: undefined,
+  password: undefined,
+  gender: undefined,
+  address: undefined,
 });
+onBeforeMount(async () => {
+  await updateUserComponent.getUser();
+});
+class UpdateUserComponent {
+  userId: number = Number(route.params.userId);
 
-class SignupComponent {
-  async signup() {
-    const response = await signupStore.signup(user.value);
-    await Swal.fire({
-      title: "Confirmación!",
-      text: `¡${response.data.name} registrado satisfactoriamente !`,
-      icon: "success",
-      confirmButtonText: "Aceptar",
-    });
+  async getUser() {
+    const response = await signupStore.getOne(this.userId);
+    updateUser.value = { ...response };
+  }
+  async updateUser() {
+    const response = await signupStore.update(this.userId, updateUser.value);
+    if (response.status === 200) {
+      Swal.fire({
+        title: "¡Confirmacion!",
+        text: "Usuario actualizado satisfactoriamente !",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+      setTimeout(() => {
+        router.push(`/users`);
+      }, 2000);
+    }
   }
 }
-const signupComponent = new SignupComponent();
+const updateUserComponent = new UpdateUserComponent();
 </script>
