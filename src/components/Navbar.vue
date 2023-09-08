@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">Tienda Virtual</a>
+      <a class="navbar-brand">Solicitud terjeta de crédito</a>
 
       <button
         class="navbar-toggler"
@@ -24,6 +24,11 @@
           <li class="nav-item">
             <a class="nav-link"
               ><router-link to="/users">Listar Usuarios</router-link></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              ><router-link to="/login">Ingresar</router-link></a
             >
           </li>
         </ul>

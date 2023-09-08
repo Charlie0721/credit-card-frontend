@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { SignupService } from '../services/signup.service'
-import { ISignup, ISignupUser } from '../interfaces/signup.interface'
+import { ISignup, ISignupUser, IUpdateUser } from '../interfaces/signup.interface'
 
 const signupService = new SignupService()
 
