@@ -74,6 +74,8 @@ class LoginComponent {
     }
 
     const response = await loginStore.loginUser(user);
+    let userId = response.data.userId;
+
     if (response.status === 201) {
       Swal.fire({
         title: "¡Confirmado!",
@@ -81,7 +83,7 @@ class LoginComponent {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      router.push("/card-application");
+      router.push(`/card-application/${userId}`);
     } else {
       user.email = "";
       user.password = "";

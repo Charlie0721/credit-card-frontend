@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand">Solicitud terjeta de crédito</a>
+      <a class="navbar-brand">Solicitud terjeta de crédito Centauros Bank</a>
 
       <button
         class="navbar-toggler"
