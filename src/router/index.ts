@@ -5,7 +5,7 @@ import Login from '../users/components/Login.vue'
 import EditUser from '../users/components/EditUser.vue'
 import CardApplication from '../card-application/components/CardApplication.vue'
 import RequestConfirmation from '../card-application/components/RequestConfirmation.vue'
-
+import CheckApplicationStatus from '../card-application/components/CheckApplicationStatus.vue'
 const routes = [
     {
         path: '/',
@@ -36,6 +36,11 @@ const routes = [
         path: '/confirm-request',
         name: 'RequestConfirmation',
         component: RequestConfirmation,
+    },
+    {
+        path: '/check-status/:userId',
+        name: 'CheckApplicationStatus',
+        component: CheckApplicationStatus,
     },
 ];
 

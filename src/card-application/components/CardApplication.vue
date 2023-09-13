@@ -53,6 +53,14 @@
         </form>
       </div>
     </div>
+    <br />
+    <button
+      type="submit"
+      class="btn btn-primary"
+      @click="creditCardAppicationComponent.goTocheckStatus"
+    >
+      Consultar estado
+    </button>
   </div>
 </template>
 
@@ -76,6 +84,8 @@ const cardAppication = ref<CreditCardApplicationInterface>({
 });
 
 class CreditCardAppicationComponent {
+  private userId: number = Number(route.params.userId);
+  
   async createAppication() {
     const response = await creditCardAppicationStore.createApplication(
       cardAppication.value
@@ -100,6 +110,9 @@ class CreditCardAppicationComponent {
     userApplicatyion.full_name = "";
     userApplicatyion.nit = "";
     userApplicatyion.monthly_income = 0;
+  }
+  goTocheckStatus() {
+    router.push(`/check-status/${this.userId}`);
   }
 }
 const creditCardAppicationComponent = new CreditCardAppicationComponent();
